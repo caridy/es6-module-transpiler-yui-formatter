@@ -11,7 +11,7 @@ ES6 Module Transpiler `es6-module-transpiler` is an experimental compiler that a
 
 ## Disclaimer
 
-This output format compromise in few of the ES6 features in ES6 modules, including live bindings, sealed objects, etc. This compromise is Ok when you try to use them into a YUI Application since YUI is based on a namespace that can be mutated.
+This output format compromises in few of the ES6 features in ES6 modules, including live bindings, sealed objects, etc. This compromise is Ok when you try to use them into a YUI Application since YUI is based on a namespace that can be mutated.
 
 ## Usage
 
