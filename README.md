@@ -25,7 +25,7 @@ Since this formatters is an plugin for [es6-module-transpiler], you can use it w
 * **Broccoli:** [broccoli-es6-concatenator](https://github.com/joliss/broccoli-es6-concatenator), maintained by @joliss (not yet compatible with v0.5.x)
 * **Mimosa:** [mimosa-es6-module-transpiler](https://github.com/dbashford/mimosa-es6-module-transpiler), maintained by @dbashford (not yet compatible with v0.5.x)
 
-You just need to make sure that `es6-module-transpiler-yui-formatter` is accessible for those tools, and pass the proper `formatter` option thru the [es6-module-transpiler]'s configuration.
+You just need to make sure that `es6-module-transpiler-yui-formatter` is accessible for those tools, and pass the proper `formatter` option thru the [es6-module-transpiler][] configuration.
 
 ### Executable
 
@@ -126,8 +126,7 @@ YUI.add("component/foo", function(Y, NAME, __imports__, __exports__) {
     __exports__[name] = value;
   }
 
-  var assert;
-  assert = __imports__["component/assert"]["default"];
+  var assert = __imports__["component/assert"]["default"];
 
   __es6_export__("default", function(a, b) {
     assert(a);

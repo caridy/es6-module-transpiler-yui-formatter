@@ -1,5 +1,5 @@
 /* jshint node:true, undef:true, unused:true */
-
+"use strict";
 var assert = require('assert');
 
 var recast = require('recast');
@@ -193,7 +193,7 @@ YUIFormatter.prototype.processExportDeclaration = function(mod, nodePath) {
     return Replacement.swaps(nodePath, [declaration].concat(declaration.declarations.map(function (declaration) {
       return b.expressionStatement(
         b.callExpression(b.identifier('__es6_export__'), [b.literal(declaration.id.name), declaration.id])
-      )
+      );
     })));
   } else if (declaration) {
     throw new Error('unexpected export style, found a declaration of type: ' + declaration.type);
@@ -311,7 +311,7 @@ YUIFormatter.prototype.buildDependencies = function(mod) {
         'no matching declaration for source module: ' + sourceModule.relativePath
       );
 
-      importedModules.push(b.literal(sourceModule.name))
+      importedModules.push(b.literal(sourceModule.name));
     });
   });
 
@@ -327,16 +327,7 @@ YUIFormatter.prototype.buildDependencies = function(mod) {
  * @return {Array[ast-types.Statement]}
  */
 YUIFormatter.prototype.buildPrelude = function(mod) {
-  var self = this,
-    fnByModule = {},
-    prelude = [];
-
-  function getFnDeclarationBody(id) {
-    if (!fnByModule[id]) {
-      fnByModule[id] = b.functionDeclaration(b.identifier(id), [b.identifier('m')], b.blockStatement([]));
-    }
-    return fnByModule[id].body.body;
-  }
+  var prelude = [];
 
   // import {foo} from "foo"; should hoist variables declaration
   mod.imports.names.forEach(function (name) {
@@ -371,7 +362,7 @@ YUIFormatter.prototype.buildPrelude = function(mod) {
     if (!specifier.declaration.node.source) {
       return;
     }
-    from = mod.getModule(specifier.declaration.node.source.value).name
+    from = mod.getModule(specifier.declaration.node.source.value).name;
     prelude.push(b.expressionStatement(
       b.callExpression(b.identifier('__es6_export__'), [
         b.literal(specifier.name),
