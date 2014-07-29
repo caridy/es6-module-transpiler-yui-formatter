@@ -215,6 +215,21 @@ YUIFormatter.prototype.processImportDeclaration = function(mod, nodePath) {
 };
 
 /**
+ * Since named export reassignment is just a local variable, we can ignore it.
+ * e.g.
+ *
+ * export var foo = 1;
+ * foo = 2;
+ *
+ * @param {Module} mod
+ * @param {ast-types.NodePath} nodePath
+ * @return {?Replacement}
+ */
+YUIFormatter.prototype.processExportReassignment = function (mod, nodePath) {
+  return null;
+};
+
+/**
  * Convert a list of ordered modules into a list of files.
  *
  * @param {Array.<Module>} modules Modules in execution order.
