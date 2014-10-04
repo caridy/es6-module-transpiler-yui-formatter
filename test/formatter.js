@@ -12,6 +12,9 @@ var chai = require('chai'),
       },
       'test/fixtures/2': {
         fullpath: __dirname + '/../build/test/fixtures/2.js'
+      },
+      'test/fixtures/3': {
+        fullpath: __dirname + '/../build/test/fixtures/3.js'
       }
     }
   });
@@ -34,6 +37,18 @@ describe('yui-formatter', function() {
       expect(mod2.default(0)).to.be.equal(false);
       expect(mod2.default(1)).to.be.equal(true);
       expect(mod2.default(2)).to.be.equal(true);
+      next();
+    });
+  });
+
+  it('should load mod3', function(next) {
+    Y.require('test/fixtures/3', function(Y, imports) {
+      var mod3 = imports['test/fixtures/3'];
+      expect(mod3.default).to.be.a('undefined');
+      expect(mod3.a).to.be.equal(10);
+      expect(mod3.b).to.be.equal(20);
+      expect(mod3.c).to.be.equal(undefined);
+      expect(mod3.z()).to.be.equal(30);
       next();
     });
   });
