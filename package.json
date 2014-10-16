@@ -1,6 +1,6 @@
 {
   "name": "es6-module-transpiler-yui-formatter",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "ES6 Module Transpiler Extension to Output YUI.add() Format.",
   "author": "Caridy Patino <caridy@gmail.com>",
   "homepage": "https://github.com/caridy/es6-module-transpiler-yui-formatter",
@@ -23,10 +23,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "recast": "^0.7.2"
+    "recast": "~0.8.0"
   },
   "devDependencies": {
-    "es6-module-transpiler": "^0.8.0",
+    "es6-module-transpiler": "~0.8.2",
     "chai": "~1.8.1",
     "mocha": "~1.15.1",
     "xunit-file": "*",
