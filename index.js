@@ -8,15 +8,6 @@ var n = types.namedTypes;
 var b = types.builders;
 var Replacement = require('./lib/replacement');
 
-function sourcePosition(mod, node) {
-  var loc = node && node.loc;
-  if (loc) {
-    return mod.relativePath + ':' + loc.start.line + ':' + (loc.start.column + 1);
-  } else {
-    return mod.relativePath;
-  }
-}
-
 /**
  * The 'YUI.add' setting for referencing exports aims to produce code that can
  * be used in environments using YUI.
@@ -338,22 +329,37 @@ YUIFormatter.prototype.buildPrelude = function(mod) {
 
   // import {foo} from "foo"; should hoist variables declaration
   mod.imports.names.forEach(function (name) {
-    var importDeclaration = mod.imports.findSpecifierByName(name),
-      from = mod.getModule(importDeclaration.declaration.node.source.value).name;
+    var specifier = mod.imports.findSpecifierByName(name),
+      from = mod.getModule(specifier.declaration.node.source.value).name;
 
-    prelude.push(b.variableDeclaration('var', [b.identifier(importDeclaration.name)]));
-    prelude.push(b.expressionStatement(b.assignmentExpression("=",
-      b.identifier(importDeclaration.name),
-      b.memberExpression(
+    prelude.push(b.variableDeclaration('var', [b.identifier(specifier.name)]));
+
+    if (specifier.from) {
+      // import { value } from './a';
+      // import a from './a';
+      prelude.push(b.expressionStatement(b.assignmentExpression("=",
+        b.identifier(specifier.name),
+        b.memberExpression(
+          b.memberExpression(
+            b.identifier('__imports__'),
+            b.literal(from),
+            true
+          ),
+          b.literal(specifier.from),
+          true
+        )
+      )));
+    } else {
+      // import * as a from './a'
+      prelude.push(b.expressionStatement(b.assignmentExpression("=",
+        b.identifier(specifier.name),
         b.memberExpression(
           b.identifier('__imports__'),
           b.literal(from),
           true
-        ),
-        b.literal(importDeclaration.from),
-        true
-      )
-    )));
+        )
+      )));
+    }
   });
 
   mod.exports.names.forEach(function(name) {
